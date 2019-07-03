@@ -65,7 +65,7 @@ class simulation_with_cells:
         # the initial conditions for the JCB paper start with 5000 cells as part of the
         # initial culture
 
-        initial_culture = [self.cell for x in range(256)]
+        initial_culture = [self.cell for x in range(512)]
         self.sim_array.append(initial_culture)
 
     def start(self):
@@ -97,6 +97,7 @@ class simulation_with_cells:
             total_cells = not_senescent_cells
 
             # print statements to check for updates:
+            print("cell iteration number: {}".format(self.iteration))
             print("cell at iteration: {}".format(len(cell_array_at_iteration)))
             print("current cell array: {}".format(len(cell_array)))
             print("dead cells after apoptosis:{} ".format(len(cell_array_at_iteration) - len(cell_array)))
@@ -110,9 +111,9 @@ class simulation_with_cells:
             print("*********************")
 
             # re-sampling if the sample goes beyond 2^upper bound of the parameters
-            if len(total_cells) >= 256:
-                self.multiplier += (len(total_cells) / 256)
-                new_temp = resample(total_cells, 256)
+            if len(total_cells) >= 512:
+                self.multiplier += (len(total_cells) / 512)
+                new_temp = resample(total_cells, 512)
                 total_cells = new_temp
 
             # append cells to the next level
@@ -153,9 +154,9 @@ class simulation_with_cells:
                     mutated_double += 1
             smallest_cell_average /= len(total_cells)
             length_average /= len(total_cells)
-            # print(normal_running/len(total_cells))
-            # print(mutated_single/ len(total_cells))
-            # print(mutated_double/ len(total_cells))
+            print(normal_running/len(total_cells))
+            print(mutated_single/ len(total_cells))
+            print(mutated_double/ len(total_cells))
             self.normal_cells.append(normal_running/len(total_cells))
             self.single_mutated.append((mutated_single/len(total_cells)))
             self.double_mutated.append(mutated_double/len(total_cells))
